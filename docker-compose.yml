@@ -1,6 +1,6 @@
 version: '2'
 services:
-#DNS
+ #DNS
  dns:
     image: lancachenet/lancache-dns:latest
     env_file: .env
@@ -9,9 +9,9 @@ services:
         ipv4_address: ${DNS_BIND_IP}
     ports:
       - ${DNS_BIND_IP}:53:53/udp
-## Folgende alle Caches
-## STEAMCACHE
-  steamcache:
+ ## Folgende alle Caches
+ ## STEAMCACHE
+ steamcache:
     image: lancachenet/monolithic:latest
     env_file: .env
     networks:
@@ -23,8 +23,8 @@ services:
     volumes:
       - ${CACHE_ROOT}/steam/cache:/data/cache
       - ${CACHE_ROOT}/steam/logs:/data/logs
-## ORIGINCACHE
-   origincache:
+ ## ORIGINCACHE
+ origincache:
     image: lancachenet/monolithic:latest
     env_file: .env
     networks:
@@ -36,8 +36,8 @@ services:
     volumes:
       - ${CACHE_ROOT}/origin/cache:/data/cache
       - ${CACHE_ROOT}/origin/logs:/data/logs
-  ## BLIZZARDCACHE
-  blizzardcache:
+ ## BLIZZARDCACHE
+ blizzardcache:
     image: lancachenet/monolithic:latest
     env_file: .env
     networks:
@@ -49,8 +49,8 @@ services:
     volumes:
       - ${CACHE_ROOT}/blizzard/cache:/data/cache
       - ${CACHE_ROOT}/blizzard/logs:/data/logs
-  ## EPICGAMESCACHE
-  epiccache:
+ ## EPICGAMESCACHE
+ epiccache:
     image: lancachenet/monolithic:latest
     env_file: .env
     networks:
@@ -62,8 +62,8 @@ services:
     volumes:
       - ${CACHE_ROOT}/epic/cache:/data/cache
       - ${CACHE_ROOT}/epic/logs:/data/logs
-  ## ROCKSTARCACHE
-  rockstarcache:
+ ## ROCKSTARCACHE
+ rockstarcache:
     image: lancachenet/monolithic:latest
     env_file: .env
     networks:
@@ -75,39 +75,38 @@ services:
     volumes:
       - ${CACHE_ROOT}/rockstar/cache:/data/cache
       - ${CACHE_ROOT}/rockstarsteam/logs:/data/logs
-## Proxys now...
-## Steam Proxy
-  steamproxy:
+ ## Proxys now...
+ ## Steam Proxy
+ steamproxy:
     image: darthblair/sniproxy
     env_file: .env
     network_mode: service:steamcache
-## Origin Proxy
-  originproxy:
+ ## Origin Proxy
+ originproxy:
     image: darthblair/sniproxy
     env_file: .env
     network_mode: service:origincache
-## Blizzard Proxy
-  blizzardroxy:
+ ## Blizzard Proxy
+ blizzardroxy:
     image: darthblair/sniproxy
     env_file: .env
     network_mode: service:blizzardcache
-## Epic Proxy
-  epicproxy:
+ ## Epic Proxy
+ epicproxy:
     image: darthblair/sniproxy
     env_file: .env
     network_mode: service:epiccache
-## Rockstar Proxy
-  rockstarproxy:
+ ## Rockstar Proxy
+ rockstarproxy:
     image: darthblair/sniproxy
     env_file: .env
     network_mode: service:rockstarcache
-## Network COnfiguration
-## IMPORTANT !!!
-## Change parent: <IF>
-## Change subnet and gateway
+ ## Network COnfiguration
+ ## IMPORTANT !!!
+ ## Change parent: <IF>
+ ## Change subnet and gateway
 networks:
   net:
-#    env_file: .env
     driver: macvlan
     driver_opts:
       parent: enp3s0 
