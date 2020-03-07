@@ -54,5 +54,5 @@ networks:
      #    com.docker.network.enable_ipv6: "true"
     ipam:
       config:
-       - subnet: ${LAN_NET}
-          gateway: ${LAN_NET_GW}
+       - subnet: 192.168.23.0/24
+       gateway: 192.168.23.1
