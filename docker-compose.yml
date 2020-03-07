@@ -46,12 +46,13 @@ services:
 
 networks:
   net:
-    env_file: .env
+#    env_file: .env
     driver: macvlan
     driver_opts:
-      parent: ${PARENT_IF}
+      parent: enp3s0 
+      #${PARENT_IF}
      #    com.docker.network.enable_ipv6: "true"
-    ipam:
-      config:
-        - subnet: ${LAN_NET}
-          gateway: ${LAN_NET_GW}
+#    ipam:
+#      config:
+#       - subnet: ${LAN_NET}
+#          gateway: ${LAN_NET_GW}
