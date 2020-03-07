@@ -1,20 +1,51 @@
-version: '2'
+version: '3'
 services:
   dns:
     image: lancachenet/lancache-dns:latest
     env_file: .env
+    networks:
+      default:
+        ipv4_address: ${DNS_BIND_IP}
     ports:
       - ${DNS_BIND_IP}:53:53/udp
-  sniproxy:
-    image: lancachenet/sniproxy:latest
-    env_file: .env
-    ports:
-      - 443:443/tcp
-  monolithic:
+  steamcache:
     image: lancachenet/monolithic:latest
     env_file: .env
+    networks:
+      default:
+        ipv4_address: ${STEAMCACHE_IP}
     ports:
-      - 80:80/tcp
+      - ${STEAMCACHE_IP}:80:80/tcp
+      - ${STEAMCACHE_IP}:443:443/tcp
     volumes:
-      - ${CACHE_ROOT}/cache:/data/cache
-      - ${CACHE_ROOT}/logs:/data/logs
+      - ${CACHE_ROOT}/steam/cache:/data/cache
+      - ${CACHE_ROOT}/steam/logs:/data/logs
+  steamproxy:
+    image: sni:1
+    env_file: .env
+    network_mode: service:steamcache
+  originproxy:
+    image: lancachenet/sniproxy:latest
+    env_file: .env
+    networks:
+      default:
+        ipv4_address: ${ORIGINCACHE_IP}
+    ports:
+      - ${ORIGINCACHE_IP}:443:443/tcp
+  origincache:
+    image: lancachenet/monolithic:latest
+    env_file: .env
+    networks:
+      default:
+        ipv4_address: ${ORIGINCACHE_IP}
+    ports:
+      - ${ORIGINCACHE_IP}:80:80/tcp
+    volumes:
+      - ${CACHE_ROOT}/origin/cache:/data/cache
+      - ${CACHE_ROOT}/origin/logs:/data/logs
+
+networks:
+  default:
+    external:
+      name: test
+
