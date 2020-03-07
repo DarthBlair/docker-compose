@@ -4,7 +4,7 @@ services:
     image: lancachenet/lancache-dns:latest
     env_file: .env
     networks:
-      default:
+      net:
         ipv4_address: ${DNS_BIND_IP}
     ports:
       - ${DNS_BIND_IP}:53:53/udp
@@ -12,7 +12,7 @@ services:
     image: lancachenet/monolithic:latest
     env_file: .env
     networks:
-      default:
+      net:
         ipv4_address: ${STEAMCACHE_IP}
     ports:
       - ${STEAMCACHE_IP}:80:80/tcp
@@ -28,7 +28,7 @@ services:
     image: lancachenet/sniproxy:latest
     env_file: .env
     networks:
-      default:
+      net:
         ipv4_address: ${ORIGINCACHE_IP}
     ports:
       - ${ORIGINCACHE_IP}:443:443/tcp
@@ -36,7 +36,7 @@ services:
     image: lancachenet/monolithic:latest
     env_file: .env
     networks:
-      default:
+      net:
         ipv4_address: ${ORIGINCACHE_IP}
     ports:
       - ${ORIGINCACHE_IP}:80:80/tcp
@@ -45,7 +45,7 @@ services:
       - ${CACHE_ROOT}/origin/logs:/data/logs
 
 networks:
-  default:
+  net:
     env_file: .env
     driver: macvlan
     driver_opts:
