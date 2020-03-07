@@ -55,7 +55,7 @@ services:
     env_file: .env
     networks:
       net:
-        ipv4_address: ${EPICGAMESCACHEE_IP}
+        ipv4_address: ${EPICGAMESCACHE_IP}
     ports:
       - ${EPICGAMESCACHE_IP}:80:80/tcp
       - ${EPICGAMESCACHE_IP}:443:443/tcp
