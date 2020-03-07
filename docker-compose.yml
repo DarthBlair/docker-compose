@@ -52,7 +52,7 @@ networks:
       parent: enp3s0 
       #${PARENT_IF}
      #    com.docker.network.enable_ipv6: "true"
-#    ipam:
-#      config:
-#       - subnet: ${LAN_NET}
-#          gateway: ${LAN_NET_GW}
+    ipam:
+      config:
+       - subnet: ${LAN_NET}
+          gateway: ${LAN_NET_GW}
