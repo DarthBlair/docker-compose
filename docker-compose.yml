@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   dns:
     image: lancachenet/lancache-dns:latest
@@ -55,4 +55,4 @@ networks:
     ipam:
       config:
            - subnet: 192.168.23.0/24
-           gateway: 192.168.23.1
+             gateway: 192.168.23.1
